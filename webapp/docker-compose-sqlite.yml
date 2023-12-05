@@ -1,0 +1,10 @@
+version: '3'
+services:
+  webapp:
+    build:
+      context: .
+    container_name: webapp
+    ports:
+      - "3000:3000"
+    volumes:
+      - /vagrant/webapp/database:/app/database
