@@ -16,6 +16,9 @@ jobs:
         with:
           node-version: "18"
 
+      - name: Change directory to project folder
+        run: cd webapp
+
       - name: Install Dependencies
         run: yarn install
 
