@@ -17,7 +17,7 @@ jobs:
           node-version: "18"
 
       - name: Change directory to project folder
-        run: cd webapp
+        run: cd cicd-webapp
 
       - name: Install Dependencies
         run: yarn install
