@@ -35,5 +35,11 @@ jobs:
           push: true
           tags: jorritgru/webapp:latest
 
+      - name: Snyk Test for Vulnerabilities
+        run: |
+          npm install -g snyk
+          snyk auth ${{ secrets.SNYK_API_TOKEN }}
+          snyk test --all-projects
+
       - name: Run Tests
         run: yarn test
