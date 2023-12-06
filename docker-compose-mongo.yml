@@ -1,0 +1,25 @@
+version: '3'
+services:
+  webapp:
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database
+    environment:
+      MONGO_URL: mongodb://database:27017/animals
+  database:
+    image: mongo
+    volumes:
+      - mongodb-data:/data/db
+  tests:
+    image: webapp 
+    depends_on:
+      - webapp  
+    environment:
+      - API_URL=http://webapp:3000
+    command: ["yarn", "test"]  
+volumes:
+  mongodb-data:
+

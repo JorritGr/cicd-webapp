@@ -15,9 +15,6 @@ jobs:
         with:
           node-version: "18"
 
-      - name: Change directory to project folder
-        run: cd /home/runner/work/cicd-webapp/cicd-webapp
-
       - name: Install Dependencies
         run: yarn install
 
