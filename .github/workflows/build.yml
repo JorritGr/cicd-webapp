@@ -16,10 +16,10 @@ jobs:
           node-version: "18"
 
       - name: Change directory to project folder
-        run: cd cicd-webapp
+        run: cd /home/runner/work/cicd-webapp/cicd-webapp
 
       - name: Install Dependencies
         run: yarn install
 
       - name: Linting
-        run: yarn --cwd cicd-webapp lint
+        run: yarn lint
