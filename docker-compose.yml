@@ -1,38 +1,42 @@
 version: '3'
+
 services:
   webapp:
-    image: jorritgru/webapp
+    image: jorritgru/webapp # Use your Docker Hub username and repository name
     ports:
-      - "3000:3000"
-    depends_on:
-      - database
+      - '3000:3000'
     environment:
       MONGO_URL: mongodb://database:27017/animals
+    depends_on:
+      database:
+        condition: service_healthy
+
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://database:27017"]
+      test: ['CMD', 'curl', '-f', 'http://database:27017']
       interval: 10s
       retries: 3
       start_period: 30s
 
   database:
-    image: mongo
+    image: mongo:4.4.7
     volumes:
-      - mongodb-data:/data/db
+      - mongodata:/data/db
     healthcheck:
-      test: ["CMD", "mongo", "--eval", "'quit()'"]
+      test: ['CMD', 'mongo', '--eval', "'quit()'"]
       interval: 10s
       retries: 3
       start_period: 30s
 
   tests:
-    image: webapp
+    image: jorritgru/webapp # Reuse the existing webapp image
     depends_on:
-      - webapp
+      webapp:
+        condition: service_healthy
+      database:
+        condition: service_healthy
     environment:
       - API_URL=http://webapp:3000
-    command: >
-      bash -c "sleep 5 && yarn test"
+    command: ['yarn', 'test']
 
 volumes:
-  mongodb-data:
-
+  mongodata:
